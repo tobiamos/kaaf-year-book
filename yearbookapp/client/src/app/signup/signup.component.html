@@ -1,61 +1,110 @@
 <app-navbar></app-navbar>
-<div class="container">
+<br/>
+<br/>
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
       <div class="card cb">
         <div class="card-block">
-          <form>
-            <div class="form-group">
-              <label for="index">Index Number</label>
-              <input type="text" name="index" id="index" class="form-control">
+          <form [formGroup]="studentForm" (submit)="onSubmit()" novalidate >
+            <p class="text-center">
+              <i class="fa fa-edit"></i>Please fill in the following fields with the correct information</p>
+            <div class="row">
+              <div class="col-md-6">
+                <div [ngClass]="{'has-error': indexNumber.errors && indexNumber.dirty, 'has-success': indexNumber.valid && indexNumber.dirty}" class="form-group">
+                  <label for="index">
+                    <i class="fa fa-renren"></i> Index Number</label>
+                  <input formControlName="indexNumber" type="text" name="index" id="index" class="form-control">
+                  <ul class="help-block">
+                   <li class="form-text text-muted" *ngIf="indexNumber.errors?.required && indexNumber.dirty">This field is required</li>
+                  </ul>
+                </div>
+                <div [ngClass]="{'has-error': name.errors && name.dirty, 'has-success': name.valid && name.dirty}" class="form-group">
+                  <label for="name">
+                    <i class="fa fa-user-circle"></i> Name</label>
+                  <input formControlName="name" type="text" name="name" id="name" class="form-control">
+                  <ul class="help-block">
+                    <li class="text-muted form-text" *ngIf="name.errors?.required && name.dirty">Name is required</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div [ngClass]="{'has-error': password.errors && password.valid, 'has-success': 'password.valid && password.dirty'}" class="form-group">
+                  <label for="password">
+                    <i class="fa fa-lock"></i> Password</label>
+                  <input formControlName="password" type="password" name="password" id="password" class="form-control">
+                  <ul class="help-block">
+                    <li class="text-muted form-text" *ngIf="password.errors?.required && password.dirty"> Password is required</li>
+                  </ul>
+                </div>
+                <div [ngClass]="{'has-error': confirm.errors && confirm.dirty, 'has-success': confirm.valid && confirm.dirty}" class="form-group">
+                  <label for="confirm">
+                    <i class="fa fa-lock"></i> Confirm Password</label>
+                  <input formControlName="confirm" type="password" name="confirm" id="confirm" class="form-control">
+                  <ul class="help-block">
+                    <li class="text-muted form-text" *ngIf="confirm.errors?.required && confirm.dirty">This field is required</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" name="name" id="name" class="form-control">
+            <div class="row">
+              <div class="col-md-6">
+                <div [ngClass]="{'has-error': email.errors?.email && email.dirty || email.errors && email.dirty, 'has-success': email.vaild && email.dirty}" class="form-group">
+                  <label for="email">
+                    <i class="fa fa-envelope"></i> Email</label>
+                  <input formControlName="email" type="email" name="email" id="email" class="form-control">
+                  <ul class="help-block">
+                    <li class="text-muted form-text" *ngIf="email.errors?.required && email.dirty">This field is required</li>
+                    <li class="text-muted form-text" *ngIf="email.errors?.email && email.dirty">A Valid email is required</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="photo">
+                    <i class="fa fa-camera"></i> Photo</label>
+                  <input type="file" name="photo" id="photo" class="form-control">
+                </div>
+              </div>
             </div>
+            <p class="text-center">OPTIONAL</p>
             <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" name="email" id="email" class="form-control">
+              <label for="quote"><i class="fa fa-quote-left"></i> Quote</label>
+              <textarea formControlName="quote" name="quote" id="quote" cols="30" rows="5" class="form-control"></textarea>
             </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" name="password" id="password" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="confirm">Confirm Password</label>
-              <input type="password" name="confirm" id="confirm" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="photo">Photo</label>
-              <input type="file" name="photo" id="photo" class="form-control">
-            </div>
-            <label class="text-center" for="social">Social Networks</label>
+            <p class="text-center">Social Networks</p>
+            <br/>
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="facebook">Facebook </label>
-                  <input type="text" name="facebook" id="facebook" class="form-control">
+                  <label for="facebook">
+                    <i class="fa fa-facebook"></i> Facebook </label>
+                  <input formControlName="facebook" type="text" name="facebook" id="facebook" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label for="instagram">Instagram</label>
-                  <input type="text" name="instagram" id="instagram" class="form-control">
+                  <label for="instagram">
+                    <i class="fa fa-instagram"></i> Instagram</label>
+                  <input formControlName="instagram" type="text" name="instagram" id="instagram" class="form-control">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="facebook">Twitter </label>
-                  <input type="text" name="facebook" id="facebook" class="form-control">
+                  <label for="facebook">
+                    <i class="fa fa-twitter"></i> Twitter </label>
+                  <input formControlName="twitter" type="text" name="facebook" id="facebook" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label for="snapchat">SnapChat</label>
-                  <input type="text" name="snapchat" id="snapchat" class="form-control">
+                  <label for="snapchat">
+                    <i class="fa fa-snapchat"></i> SnapChat</label>
+                  <input formControlName="snapchat" type="text" name="snapchat" id="snapchat" class="form-control">
                 </div>
               </div>
             </div>
             <div class="form-group">
-                <button class="btn btn-block btn-round btn-primary kbtn"> <i class="fa fa-paper-plane-o"></i> Submit</button>
-              </div>
+              <button [disabled]="!studentForm.valid" class="btn btn-block btn-round btn-warning kbtn">
+                <i class="fa fa-paper-plane-o"></i> Submit</button>
+            </div>
           </form>
         </div>
       </div>

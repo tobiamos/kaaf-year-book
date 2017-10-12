@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SignupComponent } from './signup/signup.component';
@@ -21,7 +22,14 @@ import { NavbarComponent } from './navbar/navbar.component';
     MessagesComponent,
     NavbarComponent
   ],
-  imports: [BrowserModule, ArchwizardModule, RouterModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ArchwizardModule,
+    RouterModule,
+    AppRoutingModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
