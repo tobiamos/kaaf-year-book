@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SignupComponent } from './signup/signup.component';
@@ -31,9 +32,9 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [ CommonModule, RouterModule.forRoot(appRoutes)],
   providers: [],
   bootstrap: [],
-  exports: []
+  exports: [CommonModule]
 })
 export class AppRoutingModule {}

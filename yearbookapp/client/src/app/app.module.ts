@@ -1,13 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { MessagesComponent } from './messages/messages.component';
-
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
@@ -19,7 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
     ProfileComponent,
     MessagesComponent
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, RouterModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent]
 })
