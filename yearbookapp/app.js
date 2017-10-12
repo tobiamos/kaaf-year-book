@@ -5,7 +5,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const index = require('./routes/index');
+const apiRoutes = require('./api/routes/index');
 const users = require('./routes/users');
+require('./api/models/db');
 
 const app = express();
 
@@ -22,6 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/api', apiRoutes);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
