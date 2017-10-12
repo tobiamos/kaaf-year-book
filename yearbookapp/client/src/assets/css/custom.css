@@ -7,6 +7,10 @@ body{
   
 }
 
+.cb{
+  border: 2px dotted #A26B0C;
+}
+
 
 .kbtn{
  background-color: #A26B0C;

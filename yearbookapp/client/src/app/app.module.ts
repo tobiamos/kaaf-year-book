@@ -8,6 +8,8 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ArchwizardModule } from 'ng2-archwizard';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -16,9 +18,10 @@ import { AppRoutingModule } from './app-routing.module';
     SignupComponent,
     LoginComponent,
     ProfileComponent,
-    MessagesComponent
+    MessagesComponent,
+    NavbarComponent
   ],
-  imports: [BrowserModule, RouterModule, AppRoutingModule],
+  imports: [BrowserModule, ArchwizardModule, RouterModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent]
 })
