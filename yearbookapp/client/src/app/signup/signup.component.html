@@ -1,7 +1,10 @@
+<div id="bg">
+    <img  src="../../assets/img/signupbg.jpg" alt="">
+</div>
 <app-navbar></app-navbar>
 <br/>
 <br/>
-<div class="container-fluid">
+<div class="container-fluid sh">
   <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
@@ -12,7 +15,7 @@
               <i class="fa fa-edit"></i>Please fill in the following fields with the correct information</p>
             <div class="row">
               <div class="col-md-6">
-                <div [ngClass]="{'has-error': indexNumber.errors && indexNumber.dirty, 'has-success': indexNumber.valid && indexNumber.dirty}" class="form-group">
+                <div [ngClass]="{'has-danger': indexNumber.errors && indexNumber.dirty, 'has-success': indexNumber.valid && indexNumber.dirty}" class="form-group">
                   <label for="index">
                     <i class="fa fa-renren"></i> Index Number</label>
                   <input formControlName="indexNumber" type="text" name="index" id="index" class="form-control">
@@ -20,7 +23,7 @@
                    <li class="form-text text-muted" *ngIf="indexNumber.errors?.required && indexNumber.dirty">This field is required</li>
                   </ul>
                 </div>
-                <div [ngClass]="{'has-error': name.errors && name.dirty, 'has-success': name.valid && name.dirty}" class="form-group">
+                <div [ngClass]="{'has-danger': name.errors && name.dirty, 'has-success': name.valid && name.dirty}" class="form-group">
                   <label for="name">
                     <i class="fa fa-user-circle"></i> Name</label>
                   <input formControlName="name" type="text" name="name" id="name" class="form-control">
@@ -30,7 +33,7 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div [ngClass]="{'has-error': password.errors && password.valid, 'has-success': 'password.valid && password.dirty'}" class="form-group">
+                <div [ngClass]="{'has-danger': password.errors && password.dirty, 'has-success': 'password.valid && password.dirty'}" class="form-group">
                   <label for="password">
                     <i class="fa fa-lock"></i> Password</label>
                   <input formControlName="password" type="password" name="password" id="password" class="form-control">
@@ -38,7 +41,7 @@
                     <li class="text-muted form-text" *ngIf="password.errors?.required && password.dirty"> Password is required</li>
                   </ul>
                 </div>
-                <div [ngClass]="{'has-error': confirm.errors && confirm.dirty, 'has-success': confirm.valid && confirm.dirty}" class="form-group">
+                <div [ngClass]="{'has-danger': confirm.errors && confirm.dirty, 'has-success': confirm.valid && confirm.dirty}" class="form-group">
                   <label for="confirm">
                     <i class="fa fa-lock"></i> Confirm Password</label>
                   <input formControlName="confirm" type="password" name="confirm" id="confirm" class="form-control">
@@ -50,7 +53,7 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                <div [ngClass]="{'has-error': email.errors?.email && email.dirty || email.errors && email.dirty, 'has-success': email.vaild && email.dirty}" class="form-group">
+                <div [ngClass]="{'has-danger': email.errors?.email && email.dirty || email.errors && email.dirty, 'has-success': email.vaild && email.dirty}" class="form-group">
                   <label for="email">
                     <i class="fa fa-envelope"></i> Email</label>
                   <input formControlName="email" type="email" name="email" id="email" class="form-control">
