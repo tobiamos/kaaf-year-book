@@ -62,13 +62,23 @@
                     <li class="text-muted form-text" *ngIf="email.errors?.email && email.dirty">A Valid email is required</li>
                   </ul>
                 </div>
+                <div class="form-group">
+                    <label for="photo">
+                      <i class="fa fa-camera"></i> Photo</label>
+                    <input type="file" name="photo" id="photo" class="form-control">
+                  </div>
+                
               </div>
               <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="phone1"><i class="fa fa-phone"></i> Phone</label>
+                      <input type="text" name="phone1" id="phone1" class="form-control">
+                    </div>
+                
                 <div class="form-group">
-                  <label for="photo">
-                    <i class="fa fa-camera"></i> Photo</label>
-                  <input type="file" name="photo" id="photo" class="form-control">
-                </div>
+                    <label for="phone1"><i class="fa fa-phone"></i> Phone</label>
+                    <input type="text" name="phone1" id="phone1" class="form-control">
+                  </div>
               </div>
             </div>
             <p class="text-center">OPTIONAL</p>
