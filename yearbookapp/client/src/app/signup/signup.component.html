@@ -6,8 +6,8 @@
 <br/>
 <div class="container-fluid sh">
   <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
       <div class="card cb">
         <div class="card-block">
           <form [formGroup]="studentForm" (submit)="onSubmit()" novalidate >
@@ -84,9 +84,9 @@
             <p class="text-center">OPTIONAL</p>
             <div class="form-group">
               <label for="quote"><i class="fa fa-quote-left"></i> Quote</label>
-              <textarea formControlName="quote" name="quote" id="quote" cols="30" rows="5" class="form-control"></textarea>
+              <textarea (blur)="max()" formControlName="quote" name="quote" id="quote" cols="30" rows="5" class="form-control"></textarea>
             </div>
-            <p class="text-center">Social Networks</p>
+            <p class="text-center">Social Networks {{allowed}}</p>
             <br/>
             <div class="row">
               <div class="col-md-6">
@@ -122,6 +122,6 @@
         </div>
       </div>
     </div>
-    <div class="col-md-2"></div>
+    <div class="col-md-1"></div>
   </div>
 </div>

@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class SignupComponent implements OnInit {
   studentForm: FormGroup;
+  allowed;
   constructor(private fb: FormBuilder) {
     this.createForm();
   }
@@ -31,6 +32,11 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     console.log(this.studentForm.value);
+  }
+
+  max() {
+    this.allowed = this.studentForm.get('quote').value;
+    console.log(this.allowed);
   }
 
   get name() {
