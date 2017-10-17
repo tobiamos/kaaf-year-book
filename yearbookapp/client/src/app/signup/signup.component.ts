@@ -18,10 +18,14 @@ export class SignupComponent implements OnInit {
   createForm() {
     this.studentForm = this.fb.group({
       name: ['', [Validators.required]],
-      indexNumber: ['', [Validators.required]],
+      indexNumber: [
+        '',
+        [Validators.required, Validators.minLength(8), Validators.maxLength(8)]
+      ],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       confirm: ['', [Validators.required]],
+      department: ['', [Validators.required]],
       quote: ['', []],
       facebook: ['', []],
       twitter: ['', []],

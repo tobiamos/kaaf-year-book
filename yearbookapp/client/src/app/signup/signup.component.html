@@ -1,5 +1,5 @@
 <div id="bg">
-    <img  src="../../assets/img/signupbg.jpg" alt="">
+  <img src="../../assets/img/signupbg.jpg" alt="">
 </div>
 <app-navbar></app-navbar>
 <br/>
@@ -10,17 +10,21 @@
     <div class="col-md-10">
       <div class="card cb">
         <div class="card-block">
-          <form [formGroup]="studentForm" (submit)="onSubmit()" novalidate >
+          <form [formGroup]="studentForm" (submit)="onSubmit()" novalidate>
             <p class="text-center">
               <i class="fa fa-edit"></i>Please fill in the following fields with the correct information</p>
+              <p>{{studentForm.status | json}}</p>
+              <p>{{studentForm.errors | json }}</p>
             <div class="row">
               <div class="col-md-6">
-                <div [ngClass]="{'has-danger': indexNumber.errors && indexNumber.dirty, 'has-success': indexNumber.valid && indexNumber.dirty}" class="form-group">
+                <div [ngClass]="{'has-danger': indexNumber.errors && indexNumber.dirty, 'has-success': indexNumber.valid && indexNumber.dirty}"
+                  class="form-group">
                   <label for="index">
                     <i class="fa fa-renren"></i> Index Number</label>
                   <input formControlName="indexNumber" type="text" name="index" id="index" class="form-control">
                   <ul class="help-block">
-                   <li class="form-text text-muted" *ngIf="indexNumber.errors?.required && indexNumber.dirty">This field is required</li>
+                    <li class="form-text text-muted" *ngIf="indexNumber.errors?.minLength && indexNumber.dirty || indexNumber.errors?.maxLength && indexNumber.dirty">Index Number must be  Eight Characters</li>
+                    <li class="form-text text-muted" *ngIf="indexNumber.errors?.required && indexNumber.dirty">This field is required</li>
                   </ul>
                 </div>
                 <div [ngClass]="{'has-danger': name.errors && name.dirty, 'has-success': name.valid && name.dirty}" class="form-group">
@@ -53,7 +57,8 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                <div [ngClass]="{'has-danger': email.errors?.email && email.dirty || email.errors && email.dirty, 'has-success': email.vaild && email.dirty}" class="form-group">
+                <div [ngClass]="{'has-danger': email.errors?.email && email.dirty || email.errors && email.dirty, 'has-success': email.vaild && email.dirty}"
+                  class="form-group">
                   <label for="email">
                     <i class="fa fa-envelope"></i> Email</label>
                   <input formControlName="email" type="email" name="email" id="email" class="form-control">
@@ -62,26 +67,50 @@
                     <li class="text-muted form-text" *ngIf="email.errors?.email && email.dirty">A Valid email is required</li>
                   </ul>
                 </div>
-                
-                
+
+
               </div>
               <div class="col-md-6">
-                  <div class="form-group">
-                      <label for="photo">
-                        <i class="fa fa-camera"></i> Photo</label>
-                      <input type="file" name="photo" id="photo" class="form-control">
-                    </div>
-                  
-                
+                <div class="form-group">
+                  <label for="photo">
+                    <i class="fa fa-camera"></i> Photo</label>
+                  <input type="file" name="photo" id="photo" class="form-control">
+                </div>
               </div>
             </div>
-            <div class="form-group">
-                <label for="phone1"><i class="fa fa-phone"></i> Phone</label>
-                <input type="text" name="phone1" id="phone1" class="form-control">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="phone1">
+                    <i class="fa fa-phone"></i> Phone</label>
+                  <input type="text" name="phone1" id="phone1" class="form-control">
+                </div>
+
               </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="department">
+                    <i class="fa fa-building"></i> Department</label>
+                  <select formControlName="department" name="department" id="department" class="form-control">
+                    <option value="Electrical">Electrical</option>
+                    <option value="Mechanical">Mechanical</option>
+                    <option value="Civil">Civil</option>
+                    <option value="Geomatic">Geomatic</option>
+                    <option value="Construction">Construction</option>
+                    <option value="Insurance">Insurance</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Accounting">Accounting</option>
+                    <option value="Human Resources">Human Resources</option>
+                    <option value="Banking and Finance">Banking and Finance</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
             <p class="text-center">OPTIONAL</p>
             <div class="form-group">
-              <label for="quote"><i class="fa fa-quote-left"></i> Quote</label>
+              <label for="quote">
+                <i class="fa fa-quote-left"></i> Quote</label>
               <textarea (blur)="max()" formControlName="quote" name="quote" id="quote" cols="30" rows="5" class="form-control"></textarea>
             </div>
             <p class="text-center">Social Networks {{allowed}}</p>
