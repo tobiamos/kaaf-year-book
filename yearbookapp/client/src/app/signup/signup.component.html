@@ -13,8 +13,8 @@
           <form [formGroup]="studentForm" (submit)="onSubmit()" novalidate>
             <p class="text-center">
               <i class="fa fa-edit"></i>Please fill in the following fields with the correct information</p>
-              <p>{{studentForm.status | json}}</p>
-              <p>{{studentForm.errors | json }}</p>
+            <p>{{studentForm.status | json}}</p>
+            <p>{{studentForm.value | json }}</p>
             <div class="row">
               <div class="col-md-6">
                 <div [ngClass]="{'has-danger': indexNumber.errors && indexNumber.dirty, 'has-success': indexNumber.valid && indexNumber.dirty}"
@@ -23,7 +23,7 @@
                     <i class="fa fa-renren"></i> Index Number</label>
                   <input formControlName="indexNumber" type="text" name="index" id="index" class="form-control">
                   <ul class="help-block">
-                    <li class="form-text text-muted" *ngIf="indexNumber.errors?.minLength && indexNumber.dirty || indexNumber.errors?.maxLength && indexNumber.dirty">Index Number must be  Eight Characters</li>
+                    <li class="form-text text-muted" *ngIf="indexNumber.errors?.minlength && indexNumber.dirty || indexNumber.errors?.maxlength && indexNumber.dirty">Index Number must be Eight Characters</li>
                     <li class="form-text text-muted" *ngIf="indexNumber.errors?.required && indexNumber.dirty">This field is required</li>
                   </ul>
                 </div>
