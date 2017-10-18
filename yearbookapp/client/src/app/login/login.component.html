@@ -20,17 +20,24 @@
       <div class="card cb">
         <h4 class="card-title text-center">Log In</h4>
         <div class="card-block">
-          <form>
+          <form  [formGroup]="loginForm" novalidate (submit)="onSubmit()" >
             <div class="form-group">
               <label for="index"> <i class="fa fa-renren"></i> Index Number</label>
-              <input type="text" name="index" id="index" class="form-control">
+              <input formControlName="indexNumber" type="text" name="index" id="index" class="form-control">
             </div>
             <div class="form-group">
               <label for="password"> <i class="fa fa-lock"></i> Password</label>
-              <input type="password" name="password" id="password" class="form-control">
+              <input formControlName="password" type="password" name="password" id="password" class="form-control">
             </div>
-            <div class="form-group">
-              <button class="btn btn-sm btn-primary kbtn">
+            <div class="">
+
+              <a href="" class="text-cunt">Forgot Password</a>
+            </div>
+            <!-- <ul class=" pull-right">
+              
+            </ul> -->
+            <div class="form-group pull-right">
+              <button [disabled]="!loginForm.valid" class="btn btn-sm btn-primary kbtn">
                 <i class="fa fa-sign-in"></i> Log In</button>
             </div>
           </form>

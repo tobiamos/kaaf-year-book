@@ -14,22 +14,37 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
       <div class="card cb">
-        <div class="card-title text-center">Leave a message for Amos Tobi</div>
+        <div class="card-title text-center">Leave a message for
+          <strong>Amos Tobi</strong>
+        </div>
+
         <div class="card-block">
           <div class="col-6 col-sm-3 col-md-2 mr-auto ml-auto">
             <img class="img-circle img-no-padding img-responsive" src="../../assets/img/faces/joe-gardner-2.jpg" alt="">
+
           </div>
-          <form>
-            <div class="form-group">
-              <label for="name"> <i class="fa fa-user-circle"></i> Name</label>
-              <input type="text" name="name" id="name" class="form-control">
+          <form [formGroup]="messageForm" novalidate (submit)="onSubmit()">
+            <div [ngClass]="{'has-danger': name.errors && name.dirty, 'has-success': !name.errors }" class="form-group">
+              <label for="name">
+                <i class="fa fa-user-circle"></i> Name</label>
+              <input formControlName="name" type="text" name="name" id="name" class="form-control">
+              <ul class="help-block">
+                <li *ngIf="name.errors?.required && name.dirty" class="form-text text-muted">A name is required</li>
+                <li *ngIf="name.errors?.minlength" class="form-text text-muted">Name must be at least 4 characters</li>
+                <li *ngIf="name.errors?.maxlength" class="form-text text-muted">Name must be at most 15 characters</li>
+              </ul>
+            </div>
+            <div [ngClass]="{'has-danger': message.errors && message.dirty , 'has-success': ! message.errors }" class="form-group">
+              <label for="message">
+                <i class="fa fa-envelope"></i> Message</label>
+              <textarea #message formControlName="message" name="message" id="messsage" cols="30" rows="10" class="form-control"></textarea>
+              <ul class="help-block">
+                <p [ngClass]="{'text-cunt': message.value.length < 140 , 'text-danger': message.value.length > 140}">{{message.value.length }}/140</p>
+                <li *ngIf="message.errors?.required" class="form-text text-muted">This field is required</li>
+              </ul>
             </div>
             <div class="form-group">
-              <label for="message"> <i class="fa fa-envelope"></i> Message</label>
-              <textarea name="message" id="messsage" cols="30" rows="10" class="form-control"></textarea>
-            </div>
-            <div class="form-group">
-              <button class="btn btn-sm btn-block kbtn">
+              <button [disabled]="!messageForm.valid" class="btn btn-sm btn-block kbtn">
                 <i class="fa fa-paper-plane-o"> </i>Send Message</button>
             </div>
           </form>

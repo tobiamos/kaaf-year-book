@@ -25,6 +25,7 @@
                   <ul class="help-block">
                     <li class="form-text text-muted" *ngIf="indexNumber.errors?.minlength && indexNumber.dirty || indexNumber.errors?.maxlength && indexNumber.dirty">Index Number must be Eight Characters</li>
                     <li class="form-text text-muted" *ngIf="indexNumber.errors?.required && indexNumber.dirty">This field is required</li>
+                    <li class="form-text text-muted" *ngIf="indexNumber.errors?.pattern && indexNumber.dirty">Only Numbers allowed</li>
                   </ul>
                 </div>
                 <div [ngClass]="{'has-danger': name.errors && name.dirty, 'has-success': name.valid && name.dirty}" class="form-group">
@@ -33,31 +34,41 @@
                   <input formControlName="name" type="text" name="name" id="name" class="form-control">
                   <ul class="help-block">
                     <li class="text-muted form-text" *ngIf="name.errors?.required && name.dirty">Name is required</li>
+                    <li class="text-muted form-text" *ngIf="name.errors?.maxlength && name.dirty">Name must not be more than 20 Characters</li>
                   </ul>
                 </div>
               </div>
               <div class="col-md-6">
-                <div [ngClass]="{'has-danger': password.errors && password.dirty, 'has-success': 'password.valid && password.dirty'}" class="form-group">
+                <div [ngClass]="{'has-danger':(password.errors && password.dirty), 'has-success': !password.errors}" class="form-group">
                   <label for="password">
                     <i class="fa fa-lock"></i> Password</label>
                   <input formControlName="password" type="password" name="password" id="password" class="form-control">
                   <ul class="help-block">
                     <li class="text-muted form-text" *ngIf="password.errors?.required && password.dirty"> Password is required</li>
+                    <li class="text-muted form-text" *ngIf="(password.errors?.minlength || password.errors?.maxlength) && password.dirty">
+                      Maximum characters 35 minimum 6
+                    </li>
+                    <li class="text-muted form-text" *ngIf="password.errors?.pattern && password.dirty">
+                      Password must have at least one lowercase, uppercase, number and special character
+                    </li>
                   </ul>
                 </div>
-                <div [ngClass]="{'has-danger': confirm.errors && confirm.dirty, 'has-success': confirm.valid && confirm.dirty}" class="form-group">
+                <div [ngClass]="{'has-danger':(confirm.errors && confirm.dirty) || (studentForm.errors?.matchingPasswords && confirm.dirty), 'has-success': !confirm.errors && !studentForm.errors?.matchingPasswords}" class="form-group">
                   <label for="confirm">
                     <i class="fa fa-lock"></i> Confirm Password</label>
                   <input formControlName="confirm" type="password" name="confirm" id="confirm" class="form-control">
                   <ul class="help-block">
                     <li class="text-muted form-text" *ngIf="confirm.errors?.required && confirm.dirty">This field is required</li>
+                    <li class="text-muted form-text" *ngIf="studentForm.errors?.matchingPasswords && confirm.dirty">
+                      Passwords do not match
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6">
-                <div [ngClass]="{'has-danger': email.errors?.email && email.dirty || email.errors && email.dirty, 'has-success': email.vaild && email.dirty}"
+                <div [ngClass]="{'has-danger': email.errors?.email && email.dirty || email.errors && email.dirty, 'has-success': !email.errors}"
                   class="form-group">
                   <label for="email">
                     <i class="fa fa-envelope"></i> Email</label>
@@ -80,15 +91,26 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group">
+                <div [ngClass]="{'has-danger': phone.errors && phone.dirty, 'has-success': !phone.errors}" class="form-group">
                   <label for="phone1">
                     <i class="fa fa-phone"></i> Phone</label>
-                  <input type="text" name="phone1" id="phone1" class="form-control">
+                  <input formControlName="phone" type="text" name="phone1" id="phone1" class="form-control">
+                  <ul class="help-block">
+                    <li *ngIf="phone.errors?.required && phone.dirty" class="form-text text-muted">
+                      A phone number is required
+                    </li>
+                    <li *ngIf="phone.errors?.pattern && phone.dirty" class="form-text text-muted">
+                      A Valid Phone Number is required
+                    </li>
+                    <li *ngIf="phone.errors?.maxlength && phone.dirty" class="form-text text-muted">
+                      Maximum Characters 15
+                    </li>
+                  </ul>
                 </div>
 
               </div>
               <div class="col-md-6">
-                <div class="form-group">
+                <div [ngClass]="{'has-danger': department.errors && department.dirty, 'has-success': !department.errors}" class="form-group">
                   <label for="department">
                     <i class="fa fa-building"></i> Department</label>
                   <select formControlName="department" name="department" id="department" class="form-control">
@@ -103,17 +125,30 @@
                     <option value="Human Resources">Human Resources</option>
                     <option value="Banking and Finance">Banking and Finance</option>
                   </select>
+                  <ul class="help-block">
+                    <li *ngIf="department.errors?.required && department.dirty" class="form-text text-muted">
+                      You must select a department
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
 
             <p class="text-center">OPTIONAL</p>
-            <div class="form-group">
+            <div  class="form-group">
               <label for="quote">
                 <i class="fa fa-quote-left"></i> Quote</label>
-              <textarea (blur)="max()" formControlName="quote" name="quote" id="quote" cols="30" rows="5" class="form-control"></textarea>
+              <textarea #quote formControlName="quote" name="quote" id="quote" cols="30" rows="5" class="form-control"></textarea>
+            <ul class="help-block">
+              <li class="form-text text-muted" *ngIf=" quote.value.length > 140">
+                Maximum Characters 140 
+              </li>
+              <li class="form-text text-muted">
+                  <p [ngClass]="{'text-cunt': quote.value.length < 140 , 'text-danger': quote.value.length > 140}" >{{quote.value.length }}/140</p>
+              </li>
+            </ul>
             </div>
-            <p class="text-center">Social Networks {{allowed}}</p>
+            <p class="text-center">Social Networks </p>
             <br/>
             <div class="row">
               <div class="col-md-6">

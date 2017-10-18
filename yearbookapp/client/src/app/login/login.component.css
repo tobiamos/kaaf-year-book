@@ -18,3 +18,8 @@
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
 }
+ 
+button:disabled {
+  background-color: black;  
+  border: 1px solid #DC9624;
+}
