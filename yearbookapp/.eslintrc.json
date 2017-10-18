@@ -23,6 +23,10 @@
     "linebreak-style": [0, "windows"],
     "one-var" : 0,
     "no-console": 0,
-    "no-template-curly-in-string": 0
+    "no-template-curly-in-string": 0,
+    "comma-dangle": 0,
+    "func-names": 0,
+    "no-underscore-dangle": 0,
+    "radix": 0
   }
 }

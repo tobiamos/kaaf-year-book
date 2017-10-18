@@ -13,3 +13,6 @@ mongoose.connection.on('error', (error) => {
 mongoose.connection.on('disconnected', () => {
   console.log('Disconnected from ', dbRUI);
 });
+
+
+require('./Student');
