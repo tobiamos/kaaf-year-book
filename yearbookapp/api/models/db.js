@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-const dbRUI = 'mongodb://127.0.0.1/yearbook';
+const dbRUI = process.env.DATABASE;
 mongoose.connect(dbRUI);
 mongoose.connection.on('connected', () => {
   console.log('Connected to ', dbRUI);

@@ -38,7 +38,7 @@ export class SignupComponent implements OnInit, OnChanges {
         email: ['', [Validators.required, Validators.email]],
         password: [
           '',
-          [
+          [ 
             Validators.required,
             Validators.minLength(6),
             Validators.maxLength(35),

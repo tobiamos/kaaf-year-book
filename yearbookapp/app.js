@@ -1,13 +1,17 @@
+require('dotenv').config({ path: '.env' });
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
+// const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+require('./api/models/db');
+
 
 const index = require('./routes/index');
+
 const apiRoutes = require('./api/routes/index');
-const users = require('./routes/users');
-require('./api/models/db');
 
 const app = express();
 
@@ -17,6 +21,7 @@ app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -25,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api', apiRoutes);
-app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -34,10 +39,10 @@ app.use((req, res, next) => {
   next(err);
 });
 
-const sendJsonResponse = (res, status, content) => {
+function sendJsonResponse(res, status, content) {
   res.status(status);
   res.json(content);
-};
+}
 
 // error handler
 app.use((err, req, res, next) => {
@@ -47,7 +52,7 @@ app.use((err, req, res, next) => {
 
   // render the error page
   res.status(err.status || 500);
-  sendJsonResponse(res, 500, err.stack);
+  sendJsonResponse(res, 500, res.locals.message);
 });
 
 module.exports = app;
