@@ -17,15 +17,16 @@
             <p>{{studentForm.value | json }}</p> -->
             <div class="row">
               <div class="col-md-6">
-                <div [ngClass]="{'has-danger': indexNumber.errors && indexNumber.dirty, 'has-success': indexNumber.valid && indexNumber.dirty}"
+                <div [ngClass]="{'has-danger': (indexNumber.errors && indexNumber.dirty) || (!indexNumberValid && indexNumber.dirty), 'has-success': indexNumber.valid && indexNumber.dirty}"
                   class="form-group">
                   <label for="index">
                     <i class="fa fa-renren"></i> Index Number</label>
-                  <input formControlName="indexNumber" type="text" name="index" id="index" class="form-control">
+                  <input (blur)="checkIndexNumber()" formControlName="indexNumber" type="text" name="index" id="index" class="form-control">
                   <ul class="help-block">
                     <li class="form-text text-muted" *ngIf="indexNumber.errors?.minlength && indexNumber.dirty || indexNumber.errors?.maxlength && indexNumber.dirty">Index Number must be Eight Characters</li>
                     <li class="form-text text-muted" *ngIf="indexNumber.errors?.required && indexNumber.dirty">This field is required</li>
                     <li class="form-text text-muted" *ngIf="indexNumber.errors?.pattern && indexNumber.dirty">Only Numbers allowed</li>
+                    <li *ngIf="indexMessage" class="form-text text-muted">{{indexMessage}}</li>
                   </ul>
                 </div>
                 <div [ngClass]="{'has-danger': name.errors && name.dirty, 'has-success': name.valid && name.dirty}" class="form-group">
@@ -68,14 +69,15 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                <div [ngClass]="{'has-danger': email.errors?.email && email.dirty || email.errors && email.dirty, 'has-success': !email.errors}"
+                <div [ngClass]="{'has-danger':(email.errors && email.dirty) ||(!emailValid && email.dirty) , 'has-success': !email.errors && emailValid}"
                   class="form-group">
                   <label for="email">
                     <i class="fa fa-envelope"></i> Email</label>
-                  <input formControlName="email" type="email" name="email" id="email" class="form-control">
+                  <input (blur)="checkEmail()" formControlName="email" type="email" name="email" id="email" class="form-control">
                   <ul class="help-block">
                     <li class="text-muted form-text" *ngIf="email.errors?.required && email.dirty">This field is required</li>
                     <li class="text-muted form-text" *ngIf="email.errors?.email && email.dirty">A Valid email is required</li>
+                    <li *ngIf="message" class="text-muted form-text">{{message}}</li>
                   </ul>
                 </div>
 
@@ -177,7 +179,7 @@
               </div>
             </div>
             <div class="form-group">
-              <button [disabled]="!studentForm.valid" class="btn btn-block btn-round btn-warning kbtn">
+              <button [disabled]="!studentForm.valid || !emailValid || !indexNumberValid" class="btn btn-block btn-round btn-warning kbtn">
                 <i class="fa fa-paper-plane-o"></i> Submit</button>
             </div>
           </form>

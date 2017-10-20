@@ -19,6 +19,8 @@
             <br>
             <a class="btn btn-link btn-warning" href="">
               <i class="fa fa-link"></i> www.kuc2017/{{student.indexNumber}}</a>
+            <br>
+            <button (click)="studentLogout()" class="btn kbtn btn-sm"><i class="fa fa-sign-out"></i> Logout</button>
           </p>
         </div>
         <div class="card-block ">
@@ -58,17 +60,19 @@
           <div class="tab-content text-center">
             <div class="tab-pane active" id="messages" role="tabpanel">
               <div *ngIf="student.messages && student.messages.length" else noMessage >
-                <div *ngFor="let message of student.messages">
+                <div *ngFor="let message of student.messages | paginate: { itemsPerPage: 4, currentPage: p };">
                   <div class="card-block sv">
                     <p> <em>{{message.text}}</em> </p>
                     <p class="">
 
-                      <button (click)="deleteMessage(message._id)" class="btn btn-sm kbtn">
+                      <button (click)="deleteMessage(message._id,student.indexNumber)" class="btn btn-sm kbtn">
                         <i class="fa fa-trash-o"></i>
                       </button>
                     </p>
+                    
                   </div>
                 </div>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
               </div>
               <ng-template #noMessage>
                 No Messages to show 

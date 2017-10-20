@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IStudent } from './student';
 import { ToastrService } from 'ngx-toastr';
 import { StudentService } from '../services/student.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -35,7 +36,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private toastr: ToastrService,
-    private _student: StudentService
+    private _student: StudentService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -43,20 +45,38 @@ export class ProfileComponent implements OnInit {
   }
 
   getProfile() {
-    this._student.getProfile().subscribe(data => {
-      this.toastr.success('Profile Sync Successful', '', this.toastConfig);
-      this.student = data;
-      console.log(data);
-    }, error => {
-      this.toastr.error( `${error.message}`, '', this.toastConfig);
-      console.error(error);
-    });
+    this._student.getProfile().subscribe(
+      data => {
+        this.toastr.success('Profile Sync Successful', '', this.toastConfig);
+        this.student = data;
+        // console.log(data);
+      },
+      error => {
+        this.toastr.error(`${error.message}`, '', this.toastConfig);
+        // console.error(error);
+      }
+    );
   }
+  studentLogout() {
+    this._student.logout();
+    this.router.navigate(['/']);
+    this.toastr.success(`You have been logged out successfully`, '', this.toastConfig);
 
-  deleteMessage(id) {
+  }
+  deleteMessage(id, indexNumber) {
     const index = this.student.messages.findIndex(num => {
       return num._id === id;
     });
+    this._student.deleteMessage(id, indexNumber).subscribe(
+      data => {
+        this.toastr.success(`${data}`, '', this.toastConfig);
+        console.log(data);
+      },
+      error => {
+        this.toastr.error(`${error}`, '', this.toastConfig);
+        console.error(error);
+      }
+    );
     this.student.messages.splice(index, 1);
   }
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { StudentService } from '../services/student.service';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Component({
   selector: 'app-login',
@@ -15,16 +16,28 @@ export class LoginComponent implements OnInit {
     closeButton: true,
     progressBar: true
   };
+  previousUrl;
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private toastr: ToastrService,
-    private _student: StudentService
+    private _student: StudentService,
+    private authguard: AuthGuard
   ) {
     this.createForm();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.authguard.redirectUrl) {
+      this.toastr.error(
+        'You must be logged in to view that page',
+        '',
+        this.toastConfig
+      );
+      this.previousUrl = this.authguard.redirectUrl;
+      this.authguard.redirectUrl = undefined;
+    }
+  }
 
   createForm() {
     this.loginForm = this.fb.group({
@@ -41,7 +54,11 @@ export class LoginComponent implements OnInit {
         this.toastr.success('Login Success', '', this.toastConfig);
         this._student.storeUserData(data.token);
         setTimeout(() => {
-          this.router.navigate(['/profile']);
+          if (this.previousUrl) {
+            this.router.navigate([this.previousUrl]);
+          } else {
+            this.router.navigate(['/profile']);
+          }
         }, 2000);
       },
       error => {

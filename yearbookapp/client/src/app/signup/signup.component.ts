@@ -13,6 +13,10 @@ export class SignupComponent implements OnInit, OnChanges {
   studentForm: FormGroup;
   allowed;
   allowedlength;
+  message;
+  indexMessage;
+  emailValid = false;
+  indexNumberValid = false;
   public toastConfig = {
     closeButton: true,
     progressBar: true
@@ -89,6 +93,44 @@ export class SignupComponent implements OnInit, OnChanges {
       },
       error => {
         this.toastr.error(`${error}`, '', this.toastConfig);
+      }
+    );
+  }
+
+  checkEmail() {
+    const email = this.studentForm.get('email').value;
+    this._student.checkEmail(email).subscribe(
+      data => {
+        if (!data.success) {
+          this.emailValid = false;
+          this.message = data.message;
+        } else {
+          this.emailValid = true;
+          this.message = data.message;
+        }
+        console.log(data);
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
+
+  checkIndexNumber() {
+    const indexNumber = this.studentForm.get('indexNumber').value;
+    this._student.checkIndexNumber(indexNumber).subscribe(
+      data => {
+        if(!data.success){
+          this.indexNumberValid = false;
+          this.indexMessage = data.message;
+        }else {
+          this.indexNumberValid = true;
+          this.indexMessage = data.message;
+        }
+        console.log(data);
+      },
+      error => {
+        console.error(error);
       }
     );
   }

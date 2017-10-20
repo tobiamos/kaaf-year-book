@@ -60,9 +60,12 @@ module.exports.checkEmail = async (req, res) => {
   }
   const email = await Student.findOne({ email: req.params.email });
   if (!email) {
-    sendJsonResponse(res, 200, 'Email is available');
+    sendJsonResponse(res, 200, {
+      success: true,
+      message: 'Email is available'
+    });
   }
-  sendJsonResponse(res, 200, 'Email is taken');
+  sendJsonResponse(res, 200, { success: false, message: 'Email is taken' });
 };
 
 module.exports.checkIndexNumber = async (req, res) => {
@@ -73,9 +76,15 @@ module.exports.checkIndexNumber = async (req, res) => {
     indexNumber: req.params.indexNumber
   });
   if (!indexNumber) {
-    sendJsonResponse(res, 200, 'Index Number is available');
+    sendJsonResponse(res, 200, {
+      success: true,
+      message: 'Index Number is available'
+    });
   }
-  sendJsonResponse(res, 200, 'Index Number is already Registered');
+  sendJsonResponse(res, 200, {
+    success: false,
+    message: 'Index Number is already Registered'
+  });
 };
 
 module.exports.addMessage = async (req, res) => {
@@ -103,5 +112,17 @@ module.exports.deleteMessage = async (req, res) => {
   }
   await student.messages.id(req.params.id).remove();
   await student.save();
-  sendJsonResponse(res, 200, 'Messages has been deleted');
+  sendJsonResponse(res, 200, 'Message has been deleted');
+};
+
+
+module.exports.getUsername = async (req, res) => {
+  if (!req.params.indexnumber) {
+    sendJsonResponse(res, 400, 'No index Number provided');
+  }
+  const student = await Student.findOne({ indexNumber: req.params.indexnumber });
+  if (!student) {
+    sendJsonResponse(res, 400, 'Student not found');
+  }
+  sendJsonResponse(res, 200, student);
 };

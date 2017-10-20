@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { CanActivate, Router } from '@angular/router';
+import { StudentService } from '../services/student.service';
 
 @Injectable()
 export class NotauthGuard implements CanActivate {
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return true;
+  constructor(private auth: StudentService, private router: Router) {}
+  canActivate() {
+    if (this.auth.loggedIn()) {
+      this.router.navigate(['/']);
+      return false;
+    } else {
+      return true;
+    }
   }
 }

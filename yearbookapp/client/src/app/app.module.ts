@@ -13,8 +13,12 @@ import { ProfileComponent } from './profile/profile.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ArchwizardModule } from 'ng2-archwizard';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { NavbarComponent } from './navbar/navbar.component';
 import { StudentService } from './services/student.service';
+import { AuthGuard } from './guards/auth.guard';
+import { NotauthGuard } from './guards/notauth.guard';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 @NgModule({
   declarations: [
@@ -24,11 +28,13 @@ import { StudentService } from './services/student.service';
     LoginComponent,
     ProfileComponent,
     MessagesComponent,
-    NavbarComponent
+    NavbarComponent,
+    ForgotpasswordComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    NgxPaginationModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ArchwizardModule,
@@ -41,7 +47,7 @@ import { StudentService } from './services/student.service';
       preventDuplicates: true
     })
   ],
-  providers: [StudentService],
+  providers: [StudentService, NotauthGuard, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
