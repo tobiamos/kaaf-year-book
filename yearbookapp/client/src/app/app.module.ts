@@ -1,4 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
@@ -12,7 +14,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ArchwizardModule } from 'ng2-archwizard';
 import { NavbarComponent } from './navbar/navbar.component';
-import {StudentService} from './services/student.service';
+import { StudentService } from './services/student.service';
 
 @NgModule({
   declarations: [
@@ -28,10 +30,16 @@ import {StudentService} from './services/student.service';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     ArchwizardModule,
     RouterModule,
     AppRoutingModule,
-    HttpModule
+    HttpModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-full-width',
+      preventDuplicates: true
+    })
   ],
   providers: [StudentService],
   bootstrap: [AppComponent]

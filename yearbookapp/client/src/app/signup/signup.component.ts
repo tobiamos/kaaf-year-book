@@ -1,7 +1,8 @@
-
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { StudentService } from '../services/student.service';
 
 @Component({
   selector: 'app-signup',
@@ -12,7 +13,16 @@ export class SignupComponent implements OnInit, OnChanges {
   studentForm: FormGroup;
   allowed;
   allowedlength;
-  constructor(private fb: FormBuilder, private router: Router) {
+  public toastConfig = {
+    closeButton: true,
+    progressBar: true
+  };
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private toastr: ToastrService,
+    private _student: StudentService
+  ) {
     this.createForm();
   }
 
@@ -38,7 +48,7 @@ export class SignupComponent implements OnInit, OnChanges {
         email: ['', [Validators.required, Validators.email]],
         password: [
           '',
-          [ 
+          [
             Validators.required,
             Validators.minLength(6),
             Validators.maxLength(35),
@@ -68,10 +78,19 @@ export class SignupComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    console.log(this.studentForm.value);
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-    }, 3000);
+    // console.log(this.studentForm.value);
+    const student = this.studentForm.value;
+    this._student.createStudent(student).subscribe(
+      data => {
+        this.toastr.success('Sign up Success', '', this.toastConfig);
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 3000);
+      },
+      error => {
+        this.toastr.error(`${error}`, '', this.toastConfig);
+      }
+    );
   }
 
   max() {

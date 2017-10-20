@@ -112,6 +112,12 @@ const studentSchema = new mongoose.Schema({
     required: 'Please provide a phone number',
     validate: phoneNumberValidators
   },
+  department: {
+    type: String,
+    required: 'Please choose a department',
+    trim: true,
+    lowercase: true
+  },
   facebook: { type: String, lowercase: true, trim: true },
   twitter: { type: String, lowercase: true, trim: true },
   snapchat: { type: String, lowercase: true, trim: true },
@@ -138,17 +144,15 @@ studentSchema.methods.validPassword = function (password) {
 
 studentSchema.methods.generateJwt = function () {
   const expiry = new Date();
-  expiry.setDate(expiry.getDate + 7);
+  expiry.setDate(expiry.getDate() + 7);
 
-  return jwt.sign(
-    {
-      _id: this._id,
-      name: this.name,
-      indexNumber: this.indexNumber,
-      exp: parseInt(expiry.getTime() / 1000)
-    },
-    process.env.SECRET
-  );
+  return jwt.sign({
+    _id: this._id,
+    email: this.email,
+    name: this.name,
+    indexNumber: this.indexNumber,
+    exp: parseInt(expiry.getTime() / 1000),
+  }, process.env.SECRET);
 };
 
 studentSchema.plugin(errorHandler);
