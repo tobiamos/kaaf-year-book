@@ -4,6 +4,23 @@ const jwt = require('jsonwebtoken');
 
 const Student = mongoose.model('Student');
 
+// const multer = require('multer');
+// const jimp = require('jimp');
+// const uuid = require('uuid');
+
+// const multerOptions = {
+//   storage: multer.memoryStorage(),
+//   fileFilter(req, file, next) {
+//     const isPhoto = file.mimetype.startsWith('image/');
+//     if (isPhoto) {
+//       next(null, true);
+//     } else {
+//       next({ message: "That file type isn't allowed" }, false);
+//     }
+//   }
+// };
+
+
 function sendJsonResponse(res, status, content) {
   res.status(status);
   res.json(content);
