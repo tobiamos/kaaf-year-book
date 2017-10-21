@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-forgotpassword',
@@ -6,10 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./forgotpassword.component.css']
 })
 export class ForgotpasswordComponent implements OnInit {
+  public uploader: FileUploader = new FileUploader({
+    url: `http://localhost:3000/api/uploadto`
+  });
+  public hasBaseDropZoneOver = false;
+  public hasAnotherDropZoneOver = false;
 
-  constructor() { }
-
-  ngOnInit() {
+  public fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
   }
 
+  public fileOverAnother(e: any): void {
+    this.hasAnotherDropZoneOver = e;
+  }
+
+  constructor() {}
+
+  ngOnInit() {}
 }

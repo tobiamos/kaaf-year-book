@@ -15,13 +15,30 @@ const apiRoutes = require('./api/routes/index');
 
 const app = express();
 
+app.use((req, res, next) => {
+  // set headers to allow cross origin request.
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
+
+const corsOptions = {
+  origin: 'http://localhost:4200',
+  methods: ['OPTIONS'],
+  credentials: true
+};
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(cors());
+// app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

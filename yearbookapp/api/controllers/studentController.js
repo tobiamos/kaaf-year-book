@@ -1,30 +1,53 @@
 const mongoose = require('mongoose');
 
+const Student = mongoose.model('Student');
+const multer = require('multer');
+
+// const DIR = '../../public/images/';
 const jwt = require('jsonwebtoken');
 
-const Student = mongoose.model('Student');
+// const upload = multer({ dest: DIR }).single('photo');
+// const path = require('path');
 
-// const multer = require('multer');
-// const jimp = require('jimp');
-// const uuid = require('uuid');
+const storage = multer.diskStorage({
+  // multers disk storage settings
+  destination(req, file, cb) {
+    cb(null, './uploads/');
+  },
+  filename(req, file, cb) {
+    const datetimestamp = Date.now();
+    cb(
+      null,
+      `${file.fieldname}-${datetimestamp}.${file.originalname.split('.')[
+        file.originalname.split('.').length - 1
+      ]}`
+    );
+  }
+});
 
-// const multerOptions = {
-//   storage: multer.memoryStorage(),
-//   fileFilter(req, file, next) {
-//     const isPhoto = file.mimetype.startsWith('image/');
-//     if (isPhoto) {
-//       next(null, true);
-//     } else {
-//       next({ message: "That file type isn't allowed" }, false);
-//     }
-//   }
-// };
+const upload = multer({
+  // multer settings
+  storage
+}).single('file');
 
+module.exports.pun = (req, res) => {
+  upload(req, res, (err) => {
+    console.log(req.file);
+    if (err) {
+      res.json({ error_code: 1, err_desc: err });
+      return;
+    }
+    res.json({ error_code: 0, err_desc: null });
+  });
+};
 
 function sendJsonResponse(res, status, content) {
   res.status(status);
   res.json(content);
 }
+
+// const jimp = require('jimp');
+// const uuid = require('uuid');
 
 module.exports.createStudent = async (req, res) => {
   const student = new Student(req.body);
@@ -132,14 +155,19 @@ module.exports.deleteMessage = async (req, res) => {
   sendJsonResponse(res, 200, 'Message has been deleted');
 };
 
-
 module.exports.getUsername = async (req, res) => {
   if (!req.params.indexnumber) {
     sendJsonResponse(res, 400, 'No index Number provided');
   }
-  const student = await Student.findOne({ indexNumber: req.params.indexnumber });
+  const student = await Student.findOne({
+    indexNumber: req.params.indexnumber
+  });
   if (!student) {
     sendJsonResponse(res, 400, 'Student not found');
   }
   sendJsonResponse(res, 200, student);
+};
+
+module.exports.picture = (req, res) => {
+  sendJsonResponse(res, 200, req.body);
 };

@@ -4,6 +4,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { FileDropDirective, FileSelectDirective } from 'ng2-file-upload';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -29,7 +30,9 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
     ProfileComponent,
     MessagesComponent,
     NavbarComponent,
-    ForgotpasswordComponent
+    ForgotpasswordComponent,
+    FileDropDirective,
+     FileSelectDirective
   ],
   imports: [
     BrowserModule,

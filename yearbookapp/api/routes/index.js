@@ -1,13 +1,16 @@
 const express = require('express');
+
 const ctrlStudent = require('../controllers/studentController');
 
+const router = express.Router();
+
 function catchErrors(fn) {
-  return function(req, res, next) {
+  return function (req, res, next) {
     return fn(req, res, next).catch(next);
   };
 }
 
-const router = express.Router();
+
 router.get('/checkemail/:email', catchErrors(ctrlStudent.checkEmail));
 router.get(
   '/indexnumber/:indexNumber',
@@ -28,4 +31,7 @@ router.delete(
 );
 
 router.get('/index/:indexnumber', catchErrors(ctrlStudent.getUsername));
+
+// router.use(ctrlStudent.picConfig);
+router.post('/uploadto', ctrlStudent.pun);
 module.exports = router;
