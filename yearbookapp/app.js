@@ -8,7 +8,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 require('./api/models/db');
 
-
 const index = require('./routes/index');
 
 const apiRoutes = require('./api/routes/index');
@@ -19,14 +18,16 @@ app.use((req, res, next) => {
   // set headers to allow cross origin request.
   res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
   next();
 });
 
-
 const corsOptions = {
   origin: 'http://localhost:4200',
-  methods: ['OPTIONS'],
+  methods: ['OPTIONS', 'GET', 'PUT', 'POST', 'DELETE'],
   credentials: true
 };
 app.use(cors(corsOptions));
@@ -48,7 +49,6 @@ app.use(express.static(path.join(__dirname, 'uploads')));
 
 app.use('/', index);
 app.use('/api', apiRoutes);
-
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
